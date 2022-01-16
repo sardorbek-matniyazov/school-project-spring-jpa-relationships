@@ -13,11 +13,14 @@ import java.util.List;
 @Entity()
 public class Clas {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
+
+    @OneToOne
+    private School school;
 
     @OneToMany
     private List<Subject> subjects;

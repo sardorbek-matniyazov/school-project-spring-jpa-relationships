@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Check;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -16,8 +13,8 @@ import javax.persistence.OneToOne;
 @Entity()
 @Check(constraints = "ball > 0 AND ball < 6")
 public class Mark {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 1)
@@ -29,4 +26,6 @@ public class Mark {
     @OneToOne
     private TimeTable time;
 
+    @OneToOne
+    private Student student;
 }

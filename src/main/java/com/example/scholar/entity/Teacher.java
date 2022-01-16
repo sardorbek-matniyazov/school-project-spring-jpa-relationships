@@ -13,18 +13,18 @@ import javax.persistence.*;
 public class Teacher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String first_name;
 
-    @Column
+    @Column(nullable = false)
     private String last_name;
 
     @OneToOne
     private School school;
-    @OneToOne
 
+    @OneToOne
     private Subject subject;
 }
