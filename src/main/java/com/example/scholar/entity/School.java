@@ -21,4 +21,9 @@ public class School {
 
     @Column(nullable = false)
     private String address;
+
+    public School(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 }

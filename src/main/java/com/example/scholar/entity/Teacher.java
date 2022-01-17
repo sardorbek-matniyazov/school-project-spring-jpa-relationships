@@ -27,4 +27,11 @@ public class Teacher {
 
     @OneToOne
     private Subject subject;
+
+    public Teacher(String first_name, String last_name, School school, Subject subject) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.school = school;
+        this.subject = subject;
+    }
 }

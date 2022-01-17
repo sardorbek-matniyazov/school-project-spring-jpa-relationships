@@ -21,11 +21,15 @@ public class Mark {
     private int ball;
 
     @OneToOne
+    private Student student;
+
+    @OneToOne
+    private Teacher teacher;
+
+    @OneToOne
     private Subject subject;
 
     @OneToOne
     private TimeTable time;
 
-    @OneToOne
-    private Student student;
 }
