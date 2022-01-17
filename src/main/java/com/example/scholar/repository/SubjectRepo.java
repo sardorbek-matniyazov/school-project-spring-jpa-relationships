@@ -9,4 +9,5 @@ public interface SubjectRepo extends JpaRepository<Subject, Long> {
     Optional<Subject> findByName(String name);
 
     boolean existsByName(String name);
+
 }

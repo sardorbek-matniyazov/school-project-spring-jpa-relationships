@@ -26,7 +26,18 @@ public class ClasController {
     }
 
     @PostMapping("/clas/add")
-    public String test(@RequestBody ClasDto clasDto){
+    public String pushOne(@RequestBody ClasDto clasDto){
         return service.save(clasDto);
     }
+
+    @PutMapping("/clas/{id}")
+    public String putOne(@RequestBody ClasDto clasDto, @PathVariable Long id){
+        return service.saveOne(clasDto, id);
+    }
+    @DeleteMapping("/clas/{id}")
+    public String deleteOne(@PathVariable Long id){
+        return service.deleteOne(id);
+    }
+
+
 }
