@@ -19,8 +19,8 @@ public class TimeTable {
     private int year;
 
     @Column(nullable = false)
-    private int month;
+    private String month;
 
     @Column(nullable = false)
-    private int week_day;
+    private String week_day;
 }
