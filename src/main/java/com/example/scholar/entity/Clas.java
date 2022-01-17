@@ -22,7 +22,12 @@ public class Clas {
     @OneToOne
     private School school;
 
-    @OneToMany
+    @ManyToMany
     private List<Subject> subjects;
 
+    public Clas(String name, School school, List<Subject> subjects) {
+        this.name = name;
+        this.school = school;
+        this.subjects = subjects;
+    }
 }

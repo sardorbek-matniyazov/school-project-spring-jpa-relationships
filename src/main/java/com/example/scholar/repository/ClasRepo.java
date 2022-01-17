@@ -1,12 +1,12 @@
 package com.example.scholar.repository;
 
-import com.example.scholar.entity.Subject;
+
+import com.example.scholar.entity.Clas;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface SubjectRepo extends JpaRepository<Subject, Long> {
-    Optional<Subject> findByName(String name);
-
+public interface ClasRepo extends JpaRepository<Clas, Long> {
+    Clas findById(long id);
     boolean existsByName(String name);
 }

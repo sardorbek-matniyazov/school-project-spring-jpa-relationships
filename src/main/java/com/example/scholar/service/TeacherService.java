@@ -12,6 +12,7 @@ import com.example.scholar.repository.TeacherRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeacherService {
@@ -40,8 +41,12 @@ public class TeacherService {
     }
 
     public String save(TeacherDto teacherDto) {
+        Optional<School> optional = schoolRepo.findByNameAndAddress(teacherDto.getName(), teacherDto.getAddress());
+        if (optional.isEmpty()){
+
+        }
         teacher = new Teacher(teacherDto.getFirst_name(), teacherDto.getLast_name(),
-                getSchool(teacherDto),
+                optional.get(),
                 getSubject(teacherDto));
         repo.save(teacher);
         return "Teacher successfully added";
@@ -79,10 +84,8 @@ public class TeacherService {
     }
 
     private School getSchool(TeacherDto teacherDto){
-        for (School school: schoolRepo.findAll()) {
-            if (school.getName().equals(teacherDto.getName())
-                    && school.getAddress().equals(teacherDto.getAddress()))return school;
-        }
+        if(schoolRepo.findByNameAndAddress(teacherDto.getName(), teacherDto.getAddress()).isPresent())
+            return schoolRepo.findByNameAndAddress(teacherDto.getName(), teacherDto.getAddress()).get();
         school = new School(teacherDto.getName(), teacherDto.getAddress());
         schoolRepo.save(school);
         return getSchool(teacherDto);
