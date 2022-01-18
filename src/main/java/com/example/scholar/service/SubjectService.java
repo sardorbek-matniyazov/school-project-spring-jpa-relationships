@@ -26,15 +26,20 @@ public class SubjectService {
 
     public String add(Subject subject) {
         if (searchByName(subject.getName()))return "This subject has already taken";
+
         repo.save(subject);
+
         return "Successfully added !";
     }
 
     public String put(Subject subject, Long id) {
         if (repo.findById(id).isEmpty())return "There is no selected subject";
+
         if (!searchByName(subject.getName(), id))return "Please take another subject name";
+
         subject.setId(id);
         repo.save(subject);
+
         return "Subject successfully edited";
     }
 
@@ -47,7 +52,9 @@ public class SubjectService {
 
     public String delete(Long id) {
         if (!repo.existsById(id))return "there is no selected subject";
+
         repo.deleteById(id);
+
         return "Subject successfully deleted";
     }
 

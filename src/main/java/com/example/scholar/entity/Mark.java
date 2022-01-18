@@ -18,7 +18,7 @@ public class Mark {
     private Long id;
 
     @Column(length = 1)
-    private int ball;
+    private short ball;
 
     @OneToOne
     private Student student;
@@ -32,4 +32,11 @@ public class Mark {
     @OneToOne
     private TimeTable time;
 
+    public Mark(short ball, Student student, Teacher teacher, Subject subject, TimeTable time) {
+        this.ball = ball;
+        this.student = student;
+        this.teacher = teacher;
+        this.subject = subject;
+        this.time = time;
+    }
 }

@@ -27,4 +27,11 @@ public class Student {
 
     @ManyToOne(optional = false)
     private Clas clas;
+
+    public Student(String name, String surname, School school, Clas clas) {
+        this.name = name;
+        this.surname = surname;
+        this.school = school;
+        this.clas = clas;
+    }
 }

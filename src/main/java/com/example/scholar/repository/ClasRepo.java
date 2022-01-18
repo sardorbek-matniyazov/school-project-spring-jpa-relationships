@@ -11,5 +11,9 @@ public interface ClasRepo extends JpaRepository<Clas, Long> {
 
     boolean existsByName(String name);
 
+    boolean existsByNameAndSchoolNameAndSchoolAddress(String name, String school_name, String address);
+
+    Optional<Clas> findByNameAndSchoolNameAndSchoolAddress(String name, String school_name, String address);
+
     Optional<Clas> findByName(String name);
 }

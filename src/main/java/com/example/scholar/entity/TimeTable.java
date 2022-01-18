@@ -23,4 +23,14 @@ public class TimeTable {
 
     @Column(nullable = false)
     private String week_day;
+
+    @Column(nullable = false)
+    private String key;
+
+    public TimeTable(int year, String month, String week_day, String key) {
+        this.year = year;
+        this.month = month;
+        this.week_day = week_day;
+        this.key = key;
+    }
 }

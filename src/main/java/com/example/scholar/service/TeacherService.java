@@ -41,44 +41,63 @@ public class TeacherService {
     }
 
     public String save(TeacherDto teacherDto) {
-        Optional<School> optional = schoolRepo.findByNameAndAddress(teacherDto.getName(), teacherDto.getAddress());
-        if (optional.isEmpty()){
 
-        }
-        teacher = new Teacher(teacherDto.getFirst_name(), teacherDto.getLast_name(),
-                optional.get(),
-                getSubject(teacherDto));
-        repo.save(teacher);
+        repo.save(new Teacher(teacherDto.getFirst_name(),
+                teacherDto.getLast_name(),
+                getSchool(teacherDto),
+                getSubject(teacherDto))
+        );
+
         return "Teacher successfully added";
     }
 
     public String putOne(TeacherDto teacherDto, Long id) {
-        if (repo.findById(id).isEmpty())return "There is no selected teacher";
-        teacher = new Teacher(id, teacherDto.getFirst_name(), teacherDto.getLast_name(),
-                getSchool(teacherDto), getSubject(teacherDto));
-        repo.save(teacher);
+        if (repo.findById(id).isEmpty())
+            return "There is no selected teacher";
+
+        repo.save(new Teacher(id,
+                teacherDto.getFirst_name(),
+                teacherDto.getLast_name(),
+                getSchool(teacherDto),
+                getSubject(teacherDto)));
+
         return "Teacher Successfully edited";
     }
 
     public String deleteOne(Long id) {
         if (repo.findById(id).isEmpty())return "There is no selected teacher";
         deleteFromMark(id);
+
         repo.delete(repo.getById(id));
         return "Teacher successfully deleted !";
     }
 
     private void deleteFromMark(Long id) {
+
+        if (!repo.existsBySchoolName("deleted")){
+            if (!subjectRepo.existsByName("anything"))
+                subjectRepo.save(new Subject("anything"));
+
+            if (!schoolRepo.existsByNameAndAddress("deleted", "anywhere"))
+                schoolRepo.save(new School("deleted", "anywhere"));
+
+            repo.save(new Teacher(
+                    "Deleted user",
+                    "anybody",
+                    schoolRepo.findByNameAndAddress("deleted", "anywhere").get(),
+                    subjectRepo.findByName("anything").get()));
+        }
+
         for (Mark mark: markRepo.findAll()) {
             if (mark.getTeacher().getId() == id){
-                mark = new Mark(
+                markRepo.save(new Mark(
                         mark.getId(),
                         mark.getBall(),
                         mark.getStudent(),
-                        repo.getById(0L),
+                        repo.findBySchoolName("deleted").get(),
                         mark.getSubject(),
-                        mark.getTime()
+                        mark.getTime())
                 );
-                markRepo.save(mark);
             }
         }
     }
