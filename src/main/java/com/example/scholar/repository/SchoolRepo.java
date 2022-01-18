@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface SchoolRepo extends JpaRepository<School, Long> {
-    public School findById(long id);
+    School findById(long id);
 
     Optional<School> findByNameAndAddress(String Name, String address);
 
