@@ -20,15 +20,19 @@ public class Mark {
     @Column(length = 1)
     private short ball;
 
+    // this connects as @OneToOne because one mark cannot belong to two students at the same time.
     @OneToOne
     private Student student;
 
+    // a single grade can only apply to one teacher
     @OneToOne
     private Teacher teacher;
 
+    // a single grade can only apply to one subject
     @OneToOne
     private Subject subject;
 
+    // this is a Evaluation date
     @OneToOne
     private TimeTable time;
 

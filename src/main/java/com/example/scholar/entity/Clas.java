@@ -19,12 +19,15 @@ public class Clas {
     @Column(nullable = false)
     private String name;
 
+    // it connects as @OneToOne because one class cannot belong to two classes at the same time .
     @OneToOne
     private School school;
 
+    // .. because several lessons can be taught in one class
     @ManyToMany
     private List<Subject> subjects;
 
+    // this is secondary constructor
     public Clas(String name, School school, List<Subject> subjects) {
         this.name = name;
         this.school = school;

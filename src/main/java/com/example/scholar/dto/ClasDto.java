@@ -11,6 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClasDto {
+
+    // this class is to capture the request body from the ‘class’ path
     private String name;
     private String name_school;
     private String address;

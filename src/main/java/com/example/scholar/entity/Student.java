@@ -22,6 +22,7 @@ public class Student {
     @Column(nullable = false)
     private String surname;
 
+    // this connects as @OneToOne because one student can only attend one school
     @ManyToOne
     private School school;
 
