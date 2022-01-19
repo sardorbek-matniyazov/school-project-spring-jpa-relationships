@@ -22,9 +22,11 @@ public class Teacher {
     @Column(nullable = false)
     private String last_name;
 
+    // basically one teacher teaches in one school
     @OneToOne
     private School school;
 
+    // one teacher can teach only one subject
     @OneToOne
     private Subject subject;
 

@@ -14,6 +14,8 @@ import java.util.List;
 @Service
 public class StudentService {
 
+    // these repositories connect to database tables with hibernate and simplifies our work.
+    // you can find it out by studying the wider hibernate
     private final StudentRepo repo;
     private final SchoolRepo schoolRepo;
     private final ClasRepo clasRepo;
@@ -24,23 +26,31 @@ public class StudentService {
         this.clasRepo = clasRepo;
     }
 
+
+    // this gets all students from database
     public List<Student> getAll() {
         return repo.findAll();
     }
 
+    // this method takes the student in the database selected with the id
     public Student getOne(Long id) {
         return repo.findById(id).isPresent() ? repo.findById(id).get() : null;
     }
 
+    // saving new student
     public String save(StudentDto dto) {
+
+        // if new student's school isn't exists in database
         if (!schoolRepo.existsByNameAndAddress(dto.getName_school(),
                 dto.getAddress())
         ) return "this school is not been included";
 
+        // if new student's class isn't exists in database
         if (!clasRepo.existsByNameAndSchoolNameAndSchoolAddress(dto.getClass_name(),
                 dto.getName_school(),
                 dto.getAddress())) return "this Clas is not been included";
 
+        // saving the student
         repo.save(new Student(dto.getName(),
                 dto.getSurname(),
                 getSchool(dto.getName_school(), dto.getAddress()),
@@ -49,16 +59,25 @@ public class StudentService {
         return "Student successfully added";
     }
 
+    // editing the student
     public String edit(StudentDto dto, Long id) {
+
+        // if there is no student with the selected id in the databases
         if (!repo.existsById(id)) return "there is no selected Student";
+
+        // checking schools with hibernate
+        // if the edited class isn't exists in database
         if (!schoolRepo.existsByNameAndAddress(dto.getName_school(),
                 dto.getAddress())
         ) return "this school is not been included";
 
+        // checking class with hibernate
+        // if the edited class isn't exists in database
         if (!clasRepo.existsByNameAndSchoolNameAndSchoolAddress(dto.getClass_name(),
                 dto.getName_school(),
                 dto.getAddress())) return "this Clas is not been included";
 
+        // editing student
         repo.save(new Student(id,
                 dto.getName(),
                 dto.getSurname(),
@@ -69,18 +88,23 @@ public class StudentService {
         return "Student successfully edited";
     }
 
+
+    // deleting selected mark
     public String delete(Long id) {
+
+        // if there is no student with the selected id in the databases
         if (!repo.existsById(id)) return "there is no selected Student";
 
         repo.deleteById(id);
-
         return "Student successfully deleted";
     }
 
+    // getting school with hibernate
     private School getSchool(String name, String address){
         return schoolRepo.findByNameAndAddress(name, address).get();
     }
 
+    // getting class with hibernate
     private Clas getClas(String clas_name, String name, String address){
         return clasRepo.findByNameAndSchoolNameAndSchoolAddress(clas_name, name, address).get();
     }

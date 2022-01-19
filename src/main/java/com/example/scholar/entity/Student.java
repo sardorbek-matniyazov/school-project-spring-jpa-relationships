@@ -26,6 +26,7 @@ public class Student {
     @ManyToOne
     private School school;
 
+    // many students may belong to the same class
     @ManyToOne(optional = false)
     private Clas clas;
 
