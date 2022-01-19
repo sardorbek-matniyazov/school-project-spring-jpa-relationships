@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -14,14 +12,25 @@ import javax.persistence.Id;
 @Entity()
 public class TimeTable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private int year;
 
-    @Column
-    private int month;
+    @Column(nullable = false)
+    private String month;
 
-    @Column
-    private int week_day;
+    @Column(nullable = false)
+    private String week_day;
+
+    @Column(nullable = false)
+    private String key;
+
+    public TimeTable(int year, String month, String week_day, String key) {
+        this.year = year;
+        this.month = month;
+        this.week_day = week_day;
+        this.key = key;
+    }
 }

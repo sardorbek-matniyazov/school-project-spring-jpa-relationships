@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Check;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -16,17 +13,34 @@ import javax.persistence.OneToOne;
 @Entity()
 @Check(constraints = "ball > 0 AND ball < 6")
 public class Mark {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 1)
-    private int ball;
+    private short ball;
 
+    // this connects as @OneToOne because one mark cannot belong to two students at the same time.
+    @OneToOne
+    private Student student;
+
+    // a single grade can only apply to one teacher
+    @OneToOne
+    private Teacher teacher;
+
+    // a single grade can only apply to one subject
     @OneToOne
     private Subject subject;
 
+    // this is a Evaluation date
     @OneToOne
     private TimeTable time;
 
+    public Mark(short ball, Student student, Teacher teacher, Subject subject, TimeTable time) {
+        this.ball = ball;
+        this.student = student;
+        this.teacher = teacher;
+        this.subject = subject;
+        this.time = time;
+    }
 }

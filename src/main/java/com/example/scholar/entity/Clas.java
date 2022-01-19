@@ -13,13 +13,24 @@ import java.util.List;
 @Entity()
 public class Clas {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @OneToMany
+    // it connects as @OneToOne because one class cannot belong to two classes at the same time .
+    @OneToOne
+    private School school;
+
+    // .. because several lessons can be taught in one class
+    @ManyToMany
     private List<Subject> subjects;
 
+    // this is secondary constructor
+    public Clas(String name, School school, List<Subject> subjects) {
+        this.name = name;
+        this.school = school;
+        this.subjects = subjects;
+    }
 }

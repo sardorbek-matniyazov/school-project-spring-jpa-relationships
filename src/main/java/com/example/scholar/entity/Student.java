@@ -13,18 +13,27 @@ import javax.persistence.*;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String surname;
 
+    // this connects as @OneToOne because one student can only attend one school
     @ManyToOne
     private School school;
 
+    // many students may belong to the same class
     @ManyToOne(optional = false)
     private Clas clas;
+
+    public Student(String name, String surname, School school, Clas clas) {
+        this.name = name;
+        this.surname = surname;
+        this.school = school;
+        this.clas = clas;
+    }
 }
