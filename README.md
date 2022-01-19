@@ -15,3 +15,4 @@ I have used postgresql database driver in this project.
  5. Student(who was graded), teacher(who rated the student) and a subject are required to put the mark .
  
 You can get acquainted with them in a wider project .
+
