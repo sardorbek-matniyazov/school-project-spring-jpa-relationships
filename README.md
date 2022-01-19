@@ -17,6 +17,7 @@ I have used postgresql database driver in this project.
 You can get acquainted with them in a wider project .
 
 # My database's structure is as fallows
-This![image](https://user-images.githubusercontent.com/94357474/150066457-990a8297-ae7d-4fda-8118-fd73930544ac.png)
+This
+![image](https://user-images.githubusercontent.com/94357474/150066457-990a8297-ae7d-4fda-8118-fd73930544ac.png)
 
 
