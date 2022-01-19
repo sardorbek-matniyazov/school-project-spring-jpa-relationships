@@ -18,5 +18,6 @@ You can get acquainted with them in a wider project .
 
 # My database's structure is as fallows
 
-file:///home/sardor/Pictures/Database.png![image](https://user-images.githubusercontent.com/94357474/150065823-0590d40b-bbe2-4632-8753-2e8a713e619f.png)
+This 
+[image](https://user-images.githubusercontent.com/94357474/150065823-0590d40b-bbe2-4632-8753-2e8a713e619f.png)
 
