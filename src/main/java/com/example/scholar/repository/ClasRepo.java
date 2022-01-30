@@ -16,5 +16,5 @@ public interface ClasRepo extends JpaRepository<Clas, Long> {
 
     Optional<Clas> findByNameAndSchoolNameAndSchoolAddress(String name, String school_name, String address);
 
-    Optional<Clas> findByName(String name);
+    Optional<Clas> findBySchoolId(Long id);
 }

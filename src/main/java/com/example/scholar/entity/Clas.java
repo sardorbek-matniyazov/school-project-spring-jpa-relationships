@@ -20,7 +20,7 @@ public class Clas {
     private String name;
 
     // it connects as @OneToOne because one class cannot belong to two classes at the same time .
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private School school;
 
     // .. because several lessons can be taught in one class

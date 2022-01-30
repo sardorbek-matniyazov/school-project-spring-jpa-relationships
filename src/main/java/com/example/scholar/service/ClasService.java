@@ -6,6 +6,7 @@ import com.example.scholar.entity.School;
 import com.example.scholar.entity.Subject;
 import com.example.scholar.repository.ClasRepo;
 import com.example.scholar.repository.SchoolRepo;
+import com.example.scholar.repository.StudentRepo;
 import com.example.scholar.repository.SubjectRepo;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +21,13 @@ public class ClasService {
     private ClasRepo repo;
     private SubjectRepo subjectRepo;
     private SchoolRepo schoolRepo;
+    private StudentRepo studentRepo;
 
-    public ClasService(ClasRepo repo, SubjectRepo subjectRepo, SchoolRepo schoolRepo) {
+    public ClasService(ClasRepo repo, SubjectRepo subjectRepo, SchoolRepo schoolRepo, StudentRepo studentRepo) {
         this.repo = repo;
         this.subjectRepo = subjectRepo;
         this.schoolRepo = schoolRepo;
+        this.studentRepo = studentRepo;
     }
 
     private List<Subject> subjects;
@@ -79,14 +82,17 @@ public class ClasService {
     // deleting with id
     public String deleteOne(Long id) {
 
-        // if there is no class with the selected id in the databases
+        // if there is no class with the selected id in the database
         if (!repo.existsById(id))
             return "There is no selected Clas";
+        if (deleteStudent(id)) return "error, some students were joined to this class";
 
-        // deleting the class
-        repo.delete(repo.findById(id).get());
-
+        repo.deleteById(id);
         return "clas successfully deleted";
+    }
+
+    private boolean deleteStudent(long id){
+        return studentRepo.findBySchoolId(id).isPresent();
     }
 
     // get school from database

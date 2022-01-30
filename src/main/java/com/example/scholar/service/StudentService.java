@@ -2,14 +2,17 @@ package com.example.scholar.service;
 
 import com.example.scholar.dto.StudentDto;
 import com.example.scholar.entity.Clas;
+import com.example.scholar.entity.Mark;
 import com.example.scholar.entity.School;
 import com.example.scholar.entity.Student;
 import com.example.scholar.repository.ClasRepo;
+import com.example.scholar.repository.MarkRepo;
 import com.example.scholar.repository.SchoolRepo;
 import com.example.scholar.repository.StudentRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class StudentService {
@@ -19,11 +22,13 @@ public class StudentService {
     private final StudentRepo repo;
     private final SchoolRepo schoolRepo;
     private final ClasRepo clasRepo;
+    private final MarkRepo markRepo;
 
-    public StudentService(StudentRepo repo, SchoolRepo schoolRepo, ClasRepo clasRepo) {
+    public StudentService(StudentRepo repo, SchoolRepo schoolRepo, ClasRepo clasRepo, MarkRepo markRepo) {
         this.repo = repo;
         this.schoolRepo = schoolRepo;
         this.clasRepo = clasRepo;
+        this.markRepo = markRepo;
     }
 
 
@@ -95,8 +100,16 @@ public class StudentService {
         // if there is no student with the selected id in the databases
         if (!repo.existsById(id)) return "there is no selected Student";
 
+        deleteMarks(id);
         repo.deleteById(id);
         return "Student successfully deleted";
+    }
+
+    // deleting the student's marks
+    private void deleteMarks(Long id){
+        for (Mark mark: markRepo.findAll()) {
+            if (Objects.equals(mark.getStudent().getId(), id)) markRepo.delete(mark);
+        }
     }
 
     // getting school with hibernate

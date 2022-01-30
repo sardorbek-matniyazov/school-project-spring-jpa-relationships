@@ -23,11 +23,11 @@ public class Teacher {
     private String last_name;
 
     // basically one teacher teaches in one school
-    @OneToOne
+    @ManyToOne()
     private School school;
 
     // one teacher can teach only one subject
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Subject subject;
 
     public Teacher(String first_name, String last_name, School school, Subject subject) {

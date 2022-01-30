@@ -8,6 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface MarkRepo extends JpaRepository<Mark, Long> {
     @Override
     boolean existsById(Long id);
-
-
 }

@@ -3,6 +3,7 @@ package com.example.scholar.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.engine.profile.Fetch;
 
 import javax.persistence.*;
 
@@ -23,11 +24,11 @@ public class Student {
     private String surname;
 
     // this connects as @OneToOne because one student can only attend one school
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     private School school;
 
     // many students may belong to the same class
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Clas clas;
 
     public Student(String name, String surname, School school, Clas clas) {

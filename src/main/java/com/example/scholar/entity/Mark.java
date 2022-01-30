@@ -25,15 +25,15 @@ public class Mark {
     private Student student;
 
     // a single grade can only apply to one teacher
-    @OneToOne
+    @OneToOne(cascade = CascadeType.DETACH)
     private Teacher teacher;
 
     // a single grade can only apply to one subject
-    @OneToOne
+    @OneToOne(cascade = CascadeType.DETACH)
     private Subject subject;
 
-    // this is a Evaluation date
-    @OneToOne
+    // this is Evaluation date
+    @OneToOne(cascade = CascadeType.ALL)
     private TimeTable time;
 
     public Mark(short ball, Student student, Teacher teacher, Subject subject, TimeTable time) {

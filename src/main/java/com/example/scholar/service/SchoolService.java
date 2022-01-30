@@ -1,7 +1,10 @@
 package com.example.scholar.service;
 
 import com.example.scholar.entity.School;
+import com.example.scholar.repository.ClasRepo;
 import com.example.scholar.repository.SchoolRepo;
+import com.example.scholar.repository.StudentRepo;
+import com.example.scholar.repository.TeacherRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +16,16 @@ public class SchoolService {
     // these repositories connect to database tables with hibernate and simplifies our work.
     // you can find it out by studying the wider hibernate
     private final SchoolRepo repo;
+    private final StudentRepo studentRepo;
+    private final ClasRepo clasRepo;
+    private final TeacherRepo teacherRepo;
 
     // dependency injection
-    public SchoolService(SchoolRepo repo) {
+    public SchoolService(SchoolRepo repo, StudentRepo studentRepo, ClasRepo clasRepo, TeacherRepo teacherRepo) {
         this.repo = repo;
+        this.studentRepo = studentRepo;
+        this.clasRepo = clasRepo;
+        this.teacherRepo = teacherRepo;
     }
 
     // this gets all schools from database
@@ -47,17 +56,36 @@ public class SchoolService {
         // if school already exists
         if (!checkByName(school.getName(), id))return "Please take another school name";
 
+        // editing school
         school.setId(id);
         repo.save(school);
         return "School successfully edited !";
     }
 
-    // deleting selected mark
+    // deleting selected school
     public String deleteOne(long id) {
         if (repo.findById(id) == null)return "there is no selected school";
-        repo.delete(repo.findById(id));
+        if (deleteStudent(id)) return "error, some students were joined to this school";
+        if (deleteClas(id)) return "error, some class were joined to this school";
+        if (deleteTeacher(id)) return "error, some Teachers were joined to this school";
+
+        //deleting school
+        repo.deleteById(id);
         return "School successfully deleted";
     }
+
+    private boolean deleteStudent(long id){
+        return studentRepo.findBySchoolId(id).isPresent();
+    }
+
+    private boolean deleteTeacher(long id){
+        return teacherRepo.findBySchoolId(id).isPresent();
+    }
+
+    private boolean deleteClas(long id){
+        return clasRepo.findBySchoolId(id).isPresent();
+    }
+
 
     // checking schools without hibernate
     private boolean checkByName(String name, Long id){
